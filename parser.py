@@ -1,12 +1,23 @@
 import argparse
 
+def removeCommentedLines(parseData):
+    ''' two condition to remove commented code
+        1. remove all the characters from // to \n
+        2. remove /* to */
+    '''
+    print(parseData)
+
+    
+
 def tokanizeFile(readStream):
     print('############ start parsing ##########')
-    #print(readStream)
-    i = 0
-    for line in readStream:
-        i += 1
-        print("%d. %s" % (i, line))
+    readStream.seek(0,0)
+    parseData = readStream.read()
+
+    # remove commented line 
+    parseData = removeCommentedLines(parseData)
+
+    # replave \n character with whitespace
 
     print('############ stop parsing ##########')
 

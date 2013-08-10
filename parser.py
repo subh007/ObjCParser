@@ -5,8 +5,17 @@ def removeCommentedLines(parseData):
         1. remove all the characters from // to \n
         2. remove /* to */
     '''
-    print(parseData)
 
+    # removing /* to */
+    print(parseData)
+    print('======= after removing /* */========')
+    while '/*' in parseData:
+        # remove all character between /* and */
+        start = parseData.find('/*')
+        end  = parseData.find('*/') + 2
+        parseData = parseData[:start] + parseData[end:]
+    print (parseData)
+    return parseData
     
 
 def tokanizeFile(readStream):

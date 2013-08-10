@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<class>
+  <className>SampleClass<className>
+  <importLib>Foundation</importLib>
+  <superClass>NSObject</superClass>
+  <protocol>NSObject</protocol>
+  <classVar>
+    <type>int</type>
+    <name>count</name>
+  <classVar>
+  <method>
+    <methodName>
+      <name>intiwithnibname:option:</name>
+      <visibility>classMethod</visibility>
+      <arg>
+        <name>nibname</name>
+        <type>int</type>
+      </arg>
+      <returntype>int<returntype>
+    </methodName>
+    <property>
+      <name>data</name>
+      <type>dictionary</type>
+      <propAttr>retain</propAttr>
+    </property>
+</class>
+

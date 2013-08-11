@@ -22,23 +22,25 @@ def removeCommentedLines(parseData):
     return parseData
     
 
-def getClassName(parseData):
-    
-    ''' this method parse the classname'''
+def getClassName(tokens):
+    ''' this method return the name of class'''
+    # next item to the @iterface token will contain
+    # the classname
+    indexClassNameToken = tokens.index('@interface') + 1
+    return tokens[indexClassNameToken]
+
+def getTokens(parseData):
+
+    ''' this method will give list of tokens after
+        removing the white spaces'''
+    tokens = []
     for line in parseData.splitlines():
-        if line.startswith('@interface'):
-            line.strip()
-            tokens = line.split(' ') 
-            
-            # remove the white space characters 
-            while '' in tokens:
-                tokens.remove('')
-            
-            # next item to the @iterface token will contain
-            # the classname
-            indexClassNameToken = tokens.index('@interface') + 1
-            return tokens[indexClassNameToken]
-    
+        line.strip()
+        tokensInLine = line.split(' ')
+        while '' in tokensInLine :
+            tokensInLine.remove('')
+        tokens = tokens + tokensInLine
+    return tokens
 
 def tokanizeFile(readStream):
     print('############ start parsing ##########')
@@ -48,10 +50,10 @@ def tokanizeFile(readStream):
     # remove commented line 
     parseData = removeCommentedLines(parseData)
     
-    # find the classname and write into the xml file
-    # for now we retrun the class name
-    classname = getClassName(parseData)
-    print('Class Name -- %s' % classname)
+    # convert the pareseData to list of tokens
+    tokens = getTokens(parseData)
+
+    print('classname -- %s' % getClassName(tokens))
 
     print('############ stop parsing ##########')
 

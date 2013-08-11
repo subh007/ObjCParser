@@ -7,15 +7,37 @@ def removeCommentedLines(parseData):
     '''
 
     # removing /* to */
-    print(parseData)
-    print('======= after removing /* */========')
     while '/*' in parseData:
         # remove all character between /* and */
         start = parseData.find('/*')
         end  = parseData.find('*/') + 2
         parseData = parseData[:start] + parseData[end:]
-    print (parseData)
+    
+    # now remove the commented lines
+
+    while '//' in parseData:
+        start = parseData.find('//')
+        end = parseData.find('\n')+1
+        parseData = parseData[:start] + parseData[end:]
     return parseData
+    
+
+def getClassName(parseData):
+    
+    ''' this method parse the classname'''
+    for line in parseData.splitlines():
+        if line.startswith('@interface'):
+            line.strip()
+            tokens = line.split(' ') 
+            
+            # remove the white space characters 
+            while '' in tokens:
+                tokens.remove('')
+            
+            # next item to the @iterface token will contain
+            # the classname
+            indexClassNameToken = tokens.index('@interface') + 1
+            return tokens[indexClassNameToken]
     
 
 def tokanizeFile(readStream):
@@ -25,8 +47,11 @@ def tokanizeFile(readStream):
 
     # remove commented line 
     parseData = removeCommentedLines(parseData)
-
-    # replave \n character with whitespace
+    
+    # find the classname and write into the xml file
+    # for now we retrun the class name
+    classname = getClassName(parseData)
+    print('Class Name -- %s' % classname)
 
     print('############ stop parsing ##########')
 

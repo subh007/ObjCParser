@@ -42,6 +42,24 @@ def getTokens(parseData):
         tokens = tokens + tokensInLine
     return tokens
 
+def getHeader(tokens):
+    ''' this method will return the list of imported header
+        assuming header will have format <header.h>'''
+    indexOfImport = -1
+    imports = []
+    print(tokens)
+    while 1 :
+        try:
+            indexOfImport = tokens.index('#import',indexOfImport+1)
+            header = tokens[indexOfImport + 1]
+
+            # remove the leading and trailing '<' and '>'
+            header = header.strip('<>\"')
+            imports.append(header)
+        except ValueError:
+            break
+    return imports
+
 def tokanizeFile(readStream):
     # print('############ start parsing ##########')
     readStream.seek(0,0)
@@ -62,8 +80,19 @@ def generateXml(readStream):
     
     # open a write stream to produce xml
     writeStream = open('default.xml','w')
-    writeStream.write('<?xml version=\"1.0\"?>')
+    writeStream.write('<?xml version=\"1.0\"?>\n')
+    
     tokens = tokanizeFile(readStream)
+    
+    writeStream.write('<class>\n')
+    writeStream.write('<classname>%s</classname>\n' % getClassName(tokens))
+    
+    # adding imported header
+    for header in getHeader(tokens):
+        writeStream.write('<importHeader>%s<Header>\n' % header)
+
+    writeStream.write('</class>')
+
     writeStream.close()
 
 

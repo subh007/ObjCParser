@@ -43,7 +43,7 @@ def getTokens(parseData):
     return tokens
 
 def tokanizeFile(readStream):
-    print('############ start parsing ##########')
+    # print('############ start parsing ##########')
     readStream.seek(0,0)
     parseData = readStream.read()
 
@@ -53,9 +53,19 @@ def tokanizeFile(readStream):
     # convert the pareseData to list of tokens
     tokens = getTokens(parseData)
 
-    print('classname -- %s' % getClassName(tokens))
+    # print('############ stop parsing ##########')
+    return tokens
 
-    print('############ stop parsing ##########')
+def generateXml(readStream):
+    ''' this method will generate xml equivalent for the the
+        obj-C file.'''
+    
+    # open a write stream to produce xml
+    writeStream = open('default.xml','w')
+    writeStream.write('<?xml version=\"1.0\"?>')
+    tokens = tokanizeFile(readStream)
+    writeStream.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -73,4 +83,6 @@ if __name__ == '__main__':
 
     # now we have the whole file. 
     # move for tokanization
-    tokanizeFile(readStream)
+    # tokanizeFile(readStream)
+    generateXml(readStream)
+    readStream.close()

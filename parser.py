@@ -36,6 +36,7 @@ def getTokens(parseData):
     tokens = []
     for line in parseData.splitlines():
         line.strip()
+        # it is not enoght to tokanize by ' '. we should take care of :,<,>,{,} as well
         tokensInLine = line.split(' ')
         while '' in tokensInLine :
             tokensInLine.remove('')
@@ -47,7 +48,6 @@ def getHeader(tokens):
         assuming header will have format <header.h>'''
     indexOfImport = -1
     imports = []
-    print(tokens)
     while 1 :
         try:
             indexOfImport = tokens.index('#import',indexOfImport+1)
@@ -60,6 +60,17 @@ def getHeader(tokens):
             break
     return imports
 
+def getSuperClass(token):
+    ''' this method will return superclass name'''
+
+
+def getProtocols(tokens):
+    ''' this method will return the list of protocols
+        protocol will contain after 
+        @interface ClassName:superClass<protocpl>'''
+    protocols = []
+
+
 def tokanizeFile(readStream):
     # print('############ start parsing ##########')
     readStream.seek(0,0)
@@ -70,7 +81,7 @@ def tokanizeFile(readStream):
     
     # convert the pareseData to list of tokens
     tokens = getTokens(parseData)
-
+    print(tokens)
     # print('############ stop parsing ##########')
     return tokens
 

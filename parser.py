@@ -1,4 +1,5 @@
 import argparse
+import re
 
 def removeCommentedLines(parseData):
     ''' two condition to remove commented code
@@ -62,9 +63,18 @@ def getHeader(tokens):
             break
     return imports
 
-def getSuperClass(token):
+def getSuperClass(readStream):
     ''' this method will return superclass name'''
-
+   
+    readStream.seek(0,0)
+    data = readStream.read()
+    pattern = r'@interface\s+[\w]+\s*:\s*([\w]+)'
+    
+    match = re.search(pattern, data)
+   
+    if match:
+        return match.group(1)
+    return
 
 def getProtocols(tokens):
     ''' this method will return the list of protocols
@@ -102,7 +112,10 @@ def generateXml(readStream):
     
     # adding imported header
     for header in getHeader(tokens):
-        writeStream.write('<importHeader>%s<Header>\n' % header)
+        writeStream.write('<importHeader>%s</importHeader>\n' % header)
+
+    # adding superclass to the xml
+    writeStream.write('<superClass>%s</superclass>\n' % getSuperClass(readStream))
 
     writeStream.write('</class>')
 

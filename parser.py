@@ -46,6 +46,8 @@ def getTokens(parseData):
 def getHeader(tokens):
     ''' this method will return the list of imported header
         assuming header will have format <header.h>'''
+    # bug : parsing will cause problem when #import stick to 
+    # imported file e.g. #import<UIKit/UIKit.h>
     indexOfImport = -1
     imports = []
     while 1 :

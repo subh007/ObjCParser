@@ -76,6 +76,18 @@ def getSuperClass(readStream):
         return match.group(1)
     return
 
+def getClassMethods(readStream):
+    ''' this function return the name of ClassMethods'''
+    return
+
+def getInstanceMethods(readStream):
+    ''' this function return the name of ClassMethods'''
+    return
+
+def getProperties(readStream):
+    ''' this function return the properties with their type'''
+    return
+
 def getProtocols(readStream):
     ''' this method will return the list of protocols
         protocol will contain after 

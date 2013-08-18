@@ -76,11 +76,24 @@ def getSuperClass(readStream):
         return match.group(1)
     return
 
-def getProtocols(tokens):
+def getProtocols(readStream):
     ''' this method will return the list of protocols
         protocol will contain after 
         @interface ClassName:superClass<protocpl>'''
-    protocols = []
+
+    readStream.seek(0,0)
+    data = readStream.read()
+    pattern = r':\s*\w+\s*<([\w,\s]+)>'
+
+    match = re.search(pattern, data)
+
+    if match:
+        # got some protocol create list and 
+        # return it. Protocols are separated by ,
+        find = match.group(1)
+        protocols = find.split(',')
+        return protocols
+    return
 
 
 def tokanizeFile(readStream):
@@ -116,6 +129,10 @@ def generateXml(readStream):
 
     # adding superclass to the xml
     writeStream.write('<superClass>%s</superclass>\n' % getSuperClass(readStream))
+
+    #adding protocols to the xml
+    for protocol in getProtocols(readStream):
+        writeStream.write('<protocol>%s</protocol>\n' % protocol)
 
     writeStream.write('</class>')
 

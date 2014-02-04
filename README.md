@@ -29,7 +29,7 @@ Running the program :
 $ python parser.py sample.xml
 ```
 
-This program will generate the equivalend xml in the sample.xml file.
+This program will generate the equivalend xml in the default.xml file.
 ```
 <?xml version="1.0"?>
 <class>

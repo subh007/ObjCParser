@@ -58,4 +58,4 @@ This program will generate the equivalend xml in the sample.xml file.
 </class>
 ```
 
-NOTE : many functionality is left remain for implementation.
+NOTE : some functionalities are left remain for implementation.

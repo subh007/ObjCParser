@@ -82,6 +82,16 @@ def getClassMethods(readStream):
 
 def getInstanceMethods(readStream):
     ''' this function return the name of ClassMethods'''
+    print('looking for instance method')
+    readStream.seek(0,0)
+    data = readStream.read()
+    pattern = r'-([\w\s:()]+);'
+
+    match = re.findall(pattern,data)
+
+    if match :
+        print(match)
+    
     return
 
 def getProperties(readStream):
@@ -105,7 +115,7 @@ def getProtocols(readStream):
         find = match.group(1)
         protocols = find.split(',')
         return protocols
-    return
+    return []
 
 
 def tokanizeFile(readStream):
@@ -143,8 +153,12 @@ def generateXml(readStream):
     writeStream.write('<superClass>%s</superclass>\n' % getSuperClass(readStream))
 
     #adding protocols to the xml
+
     for protocol in getProtocols(readStream):
         writeStream.write('<protocol>%s</protocol>\n' % protocol)
+
+    # adding instance metthod
+    getInstanceMethods(readStream)
 
     writeStream.write('</class>')
 

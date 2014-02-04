@@ -17,6 +17,7 @@ Sample.h
 
 #import <Foundation.h>
 @interface SampleClass : NSObject<NSObject>
+
    @property NSDictionary *(retain) dict
    -(int)initwithnibname:(NSString *)nibname option:(NSString *)option;
 @end
